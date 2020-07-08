@@ -23,7 +23,7 @@ pipeline {
                  
              }
 
-            catch(Expection e){
+            catch(e){
                       buildResult: 'SUCCESS' 
                       stageResult: 'FAILURE'
                 
