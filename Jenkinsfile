@@ -20,6 +20,7 @@ pipeline {
             steps {
                 //sh
          sh "mvn clean test -P Regress"
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
             }
         }
         stage('Regression') {
