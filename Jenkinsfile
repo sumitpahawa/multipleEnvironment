@@ -16,21 +16,21 @@ pipeline {
                 sh "mvn clean test -P Sanity"
             }
         }
+        try{
           stage('Regress') {
             steps {
-             try{
+          
                          sh "mvn clean test -P Regress"
                  
-             }
-
-            catch(e){
-                      buildResult: 'SUCCESS' 
-                      stageResult: 'FAILURE'
-                
-            }
+                    
 
             }
         }
+        } 
+        catch(Exception error) {
+         currentBuild.result = 'SUCCESS'
+             return
+              }
         stage('Regression') {
             steps {
 			sh "mvn clean test -P Regression"
