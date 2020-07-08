@@ -16,21 +16,27 @@ pipeline {
                 sh "mvn clean test -P Sanity"
             }
         }
-        try{
+      
           stage('Regress') {
             steps {
+               script{
+                   try {
+                            run = sh "mvn clean test -P Regress"
+
+                        }
+                         catch (exc) {
+                             currentBuild.result = 'UNSTABLE'
+                          }
           
-                         sh "mvn clean test -P Regress"
+              
+          }
+
                  
                     
 
             }
         }
-        } 
-        catch(Exception error) {
-         currentBuild.result = 'SUCCESS'
-             return
-              }
+       
         stage('Regression') {
             steps {
 			sh "mvn clean test -P Regression"
